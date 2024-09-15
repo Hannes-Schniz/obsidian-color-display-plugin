@@ -7,31 +7,27 @@ If your plugin does not need CSS, delete this file.
 
 */
 
-.color_container_dark {
+.color_container {
 	height: 100%;
 	padding: 1%;
-	color: white;
 	align-items: center;
 	justify-content: center;
 	display: flex;
-	width: 25%;
 }
 
-.color_container_light {
-	height: 100%;
-	padding: 1%;
+.dark {
+	color: white;
+}
+
+.light {
 	color: black;
-	align-items: center;
-	justify-content: center;
-	display: flex;
-	width: 25%;
 }
 
 .main {
 	height: 100px;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
+	display: grid;
+	width: 100%;
+	grid-template-columns: repeat(4, 1fr);
 	min-width: 90%;
 	border-radius: 5%;
 	margin: 5% 0 0 0;

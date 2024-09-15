@@ -45,8 +45,8 @@ export default class MyPlugin extends Plugin {
 
 		// This adds an editor command that can perform some operation on the current editor instance
 		this.addCommand({
-			id: "test",
-			name: "Test Command",
+			id: "palette",
+			name: "Display Palette",
 			editorCallback: (editor: Editor, view: MarkdownView) => {
 				this.createColorView(editor);
 			},
@@ -88,36 +88,39 @@ export default class MyPlugin extends Plugin {
 			.getSelection()
 			.split(" ")
 			.forEach((word) => {
-				let colorSpec = word.split("#");
-				switch (colorSpec[1]) {
-					case "dark":
-						colorSpec[1] = "color_container_dark";
-						break;
-					case "light":
-						colorSpec[1] = "color_container_light";
-						break;
-					default:
-						colorSpec[1] = "color_container_dark";
-						break;
-				}
-				colors.push({
-					color: colorSpec[0],
-					type: colorSpec[1],
-				});
+				const parsed = this.parse_color(word);
+				if (parsed != undefined) colors.push(parsed);
 			});
 		let divs = '<div class="main">';
 		for (let i = 0; i < colors.length; i++) {
 			divs +=
-				'<div class="' +
+				'<div class="color_container ' +
 				colors[i].type +
 				'" style="background-color:#' +
-				colors[i].color +
+				colors[i].color.toUpperCase() +
 				'">' +
-				colors[i].color +
+				colors[i].color.toUpperCase() +
 				" </div>";
 		}
 		divs += "</div>";
 		editor.replaceSelection(divs);
+	}
+
+	parse_color(color: string) {
+		let colorSpec = color.split("#");
+		if (color == "") {
+			return;
+		}
+		if (colorSpec[1] != undefined) {
+			colorSpec[1] = colorSpec[1].toLowerCase();
+		} else {
+			colorSpec[1] = "dark";
+		}
+
+		return {
+			color: colorSpec[0],
+			type: colorSpec[1],
+		};
 	}
 }
 
