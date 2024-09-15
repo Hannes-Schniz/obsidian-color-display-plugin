@@ -24,7 +24,6 @@ If your plugin does not need CSS, delete this file.
 }
 
 .main {
-	height: 100px;
 	display: grid;
 	width: 100%;
 	grid-template-columns: repeat(4, 1fr);
